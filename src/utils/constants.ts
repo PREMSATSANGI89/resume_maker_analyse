@@ -1,8 +1,8 @@
 import type { ResumeSectionKey, ResumeTemplateMeta } from '@/types/resume.types';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.resumeforge.ai/v1';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
-export const USE_MOCK_API = true; // Toggle to false once a real backend is available
+export const USE_MOCK_API = false; // Toggle to true to develop against mock data instead of the real backend
 
 export const LOCAL_STORAGE_KEYS = {
   RESUME_DRAFT: 'resumeforge:draft',
@@ -78,3 +78,9 @@ export const ACCEPTED_RESUME_FILE_TYPES = {
 };
 
 export const MAX_UPLOAD_SIZE_MB = 5;
+
+/** Bounds for the Job Description Matcher textarea — mirrored server-side in server/routes/jobMatch.ts. */
+export const JOB_DESCRIPTION_LIMITS = {
+  MIN_CHARS: 50,
+  MAX_CHARS: 20000,
+};

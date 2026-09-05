@@ -80,10 +80,13 @@ export default function ResumeAnalyzerPage() {
               }}
             />
             {pendingFile && !isBusy && (
-              <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
-                <Button variant="contained" size="large" onClick={handleAnalyze} sx={{ flexGrow: 1 }}>
+              <Stack spacing={1} sx={{ mt: 3 }}>
+                <Button variant="contained" size="large" onClick={handleAnalyze} fullWidth>
                   Analyze resume
                 </Button>
+                <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center' }}>
+                  AI analysis can take up to a couple of minutes.
+                </Typography>
               </Stack>
             )}
           </Card>

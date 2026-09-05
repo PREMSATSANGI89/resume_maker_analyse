@@ -35,6 +35,7 @@ import { useTemplates } from '@/hooks/queries/useTemplates';
 import { useGenerateResume } from '@/hooks/queries/useGenerateResume';
 import { useRecentResumes } from '@/hooks/useRecentResumes';
 import { calculateResumeCompletion } from '@/utils/helpers';
+import { buildResumeFileName, exportNodeToPdf } from '@/utils/pdfExport';
 import { TemplateSelector } from '@/components/resume/TemplateSelector';
 import { ResumePreview } from '@/components/resume/ResumePreview';
 import { PersonalInfoSection } from '@/components/resume/sections/PersonalInfoSection';
@@ -62,7 +63,9 @@ export default function ResumeBuilderPage() {
   const { trackResume } = useRecentResumes();
   const [mobileView, setMobileView] = useState<MobileView>('form');
   const [previewCollapsed, setPreviewCollapsed] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const skipNextSync = useRef(false);
+  const exportRef = useRef<HTMLDivElement>(null);
 
   const methods = useForm<ResumeFormValues>({
     resolver: zodResolver(resumeSchema),
@@ -104,12 +107,20 @@ export default function ResumeBuilderPage() {
   };
 
   const handleDownload = async () => {
-    // In production this would call POST /resume/generate and download the returned PDF.
-    // For the offline demo we fall back to the browser's native print-to-PDF.
     await generateMutation.mutateAsync(resume).catch(() => {
-      // Toast already handled by mutation
+      // Toast already handled by mutation — still try to produce the PDF locally.
     });
-    window.print();
+
+    if (!exportRef.current) return;
+    setIsExporting(true);
+    try {
+      await exportNodeToPdf(exportRef.current, buildResumeFileName(resume.personalInfo.fullName));
+    } catch (err) {
+      console.error('PDF export failed:', err);
+      toast.error('Could not create the PDF file. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const handlePrint = () => window.print();
@@ -179,9 +190,9 @@ export default function ResumeBuilderPage() {
               startIcon={<DownloadRounded />}
               onClick={handleDownload}
               variant="contained"
-              disabled={generateMutation.isPending}
+              disabled={generateMutation.isPending || isExporting}
             >
-              {generateMutation.isPending ? 'Preparing…' : 'Download PDF'}
+              {generateMutation.isPending || isExporting ? 'Preparing…' : 'Download PDF'}
             </Button>
           </Stack>
         </Stack>
@@ -289,6 +300,14 @@ export default function ResumeBuilderPage() {
               <ResumePreview resume={resume} scale={0.72} />
             </Box>
           </Card>
+        </Box>
+      </Box>
+
+      {/* Off-screen, full-scale render used as the PDF export source — kept in the
+          layout (not display:none) so html2canvas can measure and rasterize it. */}
+      <Box sx={{ position: 'fixed', top: 0, left: '-10000px', zIndex: -1 }} aria-hidden>
+        <Box ref={exportRef}>
+          <ResumePreview resume={resume} />
         </Box>
       </Box>
     </Box>

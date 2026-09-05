@@ -21,6 +21,8 @@ import {
   DashboardOutlined,
   DescriptionOutlined,
   InsightsOutlined,
+  CompareArrowsOutlined,
+  TravelExploreOutlined,
   MenuRounded,
   DarkModeOutlined,
   LightModeOutlined,
@@ -34,6 +36,8 @@ const NAV_ITEMS = [
   { label: 'Dashboard', path: '/', icon: <DashboardOutlined /> },
   { label: 'Resume Builder', path: '/builder', icon: <DescriptionOutlined /> },
   { label: 'Resume Analyzer', path: '/analyzer', icon: <InsightsOutlined /> },
+  { label: 'Compare Resumes', path: '/compare', icon: <CompareArrowsOutlined /> },
+  { label: 'Job Description Matcher', path: '/job-match', icon: <TravelExploreOutlined /> },
 ];
 
 export function MainLayout() {
@@ -61,7 +65,7 @@ export function MainLayout() {
             <AutoAwesome sx={{ fontSize: 18, color: '#fff' }} />
           </Box>
           <Typography variant="h6" fontWeight={800} sx={{ fontFamily: '"Sora", sans-serif' }}>
-            ResumeForge
+            ResumeInsight
           </Typography>
         </Stack>
       </Toolbar>
@@ -100,7 +104,7 @@ export function MainLayout() {
       <Divider sx={{ mx: 2, mb: 2 }} />
       <Box sx={{ px: 3, pb: 3 }}>
         <Typography variant="caption" color="text.secondary">
-          ResumeForge AI v1.0
+          ResumeInsight AI v1.0
         </Typography>
       </Box>
     </Box>

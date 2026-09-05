@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import type { ResumeAnalysisResult } from '@/types/analyzer.types';
 
-const SUGGESTION_POOL: Array<Omit<ResumeAnalysisResult['suggestions'][number], 'id'>> = [
+export const SUGGESTION_POOL: Array<Omit<ResumeAnalysisResult['suggestions'][number], 'id'>> = [
   {
     category: 'ATS',
     severity: 'high',
@@ -42,7 +42,7 @@ const SUGGESTION_POOL: Array<Omit<ResumeAnalysisResult['suggestions'][number], '
   },
 ];
 
-const STRENGTHS_POOL = [
+export const STRENGTHS_POOL = [
   'Clear, action-oriented bullet points in recent roles',
   'Consistent reverse-chronological formatting',
   'Strong technical skills section aligned with the role',
@@ -50,7 +50,7 @@ const STRENGTHS_POOL = [
   'Concise, keyword-rich professional summary',
 ];
 
-const WEAKNESSES_POOL = [
+export const WEAKNESSES_POOL = [
   'Missing measurable outcomes in older roles',
   'Summary is generic and could be tailored per application',
   'Skills section mixes soft and technical skills without grouping',
@@ -58,7 +58,7 @@ const WEAKNESSES_POOL = [
   'Education section lacks relevant coursework or honors',
 ];
 
-const MISSING_SKILLS_POOL = [
+export const MISSING_SKILLS_POOL = [
   'TypeScript',
   'GraphQL',
   'Docker',
@@ -69,7 +69,7 @@ const MISSING_SKILLS_POOL = [
   'AWS',
 ];
 
-const RECOMMENDED_KEYWORDS_POOL = [
+export const RECOMMENDED_KEYWORDS_POOL = [
   'cross-functional collaboration',
   'stakeholder management',
   'agile methodology',
@@ -78,12 +78,12 @@ const RECOMMENDED_KEYWORDS_POOL = [
   'data-driven decision making',
 ];
 
-function pickRandom<T>(pool: T[], count: number): T[] {
+export function pickRandom<T>(pool: T[], count: number): T[] {
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count);
 }
 
-function randomScore(min = 55, max = 95): number {
+export function randomScore(min = 55, max = 95): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 

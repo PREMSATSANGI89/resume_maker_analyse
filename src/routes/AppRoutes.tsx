@@ -8,6 +8,11 @@ const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage'));
 const ResumeBuilder = lazy(() => import('@/pages/ResumeBuilder/ResumeBuilderPage'));
 const ResumeAnalyzer = lazy(() => import('@/pages/ResumeAnalyzer/ResumeAnalyzerPage'));
 const AnalyzerResult = lazy(() => import('@/pages/AnalyzerResult/AnalyzerResultPage'));
+const ResumeComparison = lazy(() => import('@/pages/ResumeComparison/ResumeComparisonPage'));
+const ComparisonResult = lazy(() => import('@/pages/ComparisonResult/ComparisonResultPage'));
+const JobDescriptionMatcher = lazy(
+  () => import('@/pages/JobDescriptionMatcher/JobDescriptionMatcherPage'),
+);
 const NotFound = lazy(() => import('@/pages/NotFound/NotFoundPage'));
 
 function RouteFallback() {
@@ -27,6 +32,9 @@ export function AppRoutes() {
           <Route path="/builder" element={<ResumeBuilder />} />
           <Route path="/analyzer" element={<ResumeAnalyzer />} />
           <Route path="/analyzer/result" element={<AnalyzerResult />} />
+          <Route path="/compare" element={<ResumeComparison />} />
+          <Route path="/compare/result" element={<ComparisonResult />} />
+          <Route path="/job-match" element={<JobDescriptionMatcher />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
